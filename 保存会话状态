@@ -1,0 +1,33 @@
+# 在项目根目录执行
+cat > resume_dev.sh <<'EOF'
+#!/bin/zsh
+# 恢复开发会话脚本
+
+# 1. 导航至项目目录
+cd ~/asr_tencent_v224
+
+# 2. 激活虚拟环境
+source .venv/bin/activate
+
+# 3. 恢复git分支
+git checkout main
+
+# 4. 安装依赖（安全验证）
+pip install -r requirements.txt --no-warn-script-location
+
+# 5. 打开开发环境
+code .  # 如果使用VSCode
+# 或 open -a PyCharm .  # 如果使用PyCharm
+
+# 6. 显示今日任务
+echo "今日任务："
+echo "- [ ] 实现音频预处理功能"
+echo "- [ ] 添加命令行界面"
+EOF
+
+# 设置可执行权限
+chmod +x resume_dev.sh
+
+# 创建快速启动别名
+echo "alias asr_start='./resume_dev.sh'" >> ~/.zshrc
+source ~/.zshrc 

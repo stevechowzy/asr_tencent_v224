@@ -1,0 +1,5 @@
+pytest==8.3.4
+python-dotenv==1.0.0
+requests==2.32.3
+tencentcloud-sdk-python-asr==3.0.1324
+tencentcloud-sdk-python-common==3.0.1324

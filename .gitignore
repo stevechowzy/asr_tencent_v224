@@ -25,3 +25,4 @@ cat > .gitignore << EOF
 # 忽略敏感信息
 chat_logs/*.log
 credentials.json
+.env

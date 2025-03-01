@@ -8,9 +8,11 @@ import sys
 from dotenv import load_dotenv
 import base64  # 在文件顶部添加导入
 from pydub.utils import make_chunks
+from recorder import AudioRecorder
+import time
 
 # 在文件顶部添加环境变量加载
-load_dotenv()  # 加载.env文件
+load_dotenv()  # 加载.env文件中的环境变量
 
 # 在文件顶部添加区域配置
 REGION = "ap-shanghai"  # 与你的腾讯云账户区域一致
@@ -102,5 +104,37 @@ def main():
     except Exception as e:
         print(f"处理失败: {str(e)}")
 
+def real_time_asr():
+    # 从环境变量获取凭证
+    SECRET_ID = os.getenv("TENCENT_SECRET_ID")
+    SECRET_KEY = os.getenv("TENCENT_SECRET_KEY")
+    
+    if not SECRET_ID or not SECRET_KEY:
+        print("错误：请在.env文件中配置TENCENT_SECRET_ID和TENCENT_SECRET_KEY")
+        return
+
+    recorder = AudioRecorder()
+    try:
+        recorder.start()
+        while True:
+            data = recorder.read_chunk()
+            if data:
+                base64_data = base64.b64encode(data).decode('utf-8')
+                result = tencent_asr(base64_data, SECRET_ID, SECRET_KEY)
+                print("实时结果:", result)
+            time.sleep(0.1)
+    except KeyboardInterrupt:
+        recorder.stop()
+
 if __name__ == "__main__":
-    main() 
+    print("请选择模式：")
+    print("1. 文件识别")
+    print("2. 实时识别")
+    choice = input("输入选项 (1/2): ")
+    
+    if choice == "1":
+        main()
+    elif choice == "2":
+        real_time_asr()
+    else:
+        print("无效选项") 

@@ -31,3 +31,4 @@ chmod +x resume_dev.sh
 # 创建快速启动别名
 echo "alias asr_start='./resume_dev.sh'" >> ~/.zshrc
 source ~/.zshrc 
+

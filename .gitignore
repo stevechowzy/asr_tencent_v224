@@ -1,4 +1,4 @@
-cat > .gitignore << EOF
+cat > .gitignore << EOF 
 # Virtual Environment
 **/.venv/
 **/.env*
@@ -18,3 +18,10 @@ cat > .gitignore << EOF
 # IDE
 **/.vscode/
 **/.idea/
+
+# 环境变量文件
+.env
+
+# 忽略敏感信息
+chat_logs/*.log
+credentials.json

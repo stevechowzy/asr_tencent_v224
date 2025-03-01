@@ -68,3 +68,17 @@ launchctl list | grep asr.reminder
 
 # 测试通知系统（立即触发）
 launchctl start com.asr.reminder
+
+功能说明
+每日10点自动:  
+生成当日计划文档,保存至 ~/Documents/asr_plans   
+弹出系统通知（含提示音）
+自动打开VSCode项目
+计划文档结构：
+昨日进度（自动继承前日未完成任务）
+今日目标（预设模板）
+会议记录区
+持久化配置：
+开机自动启动
+无需保持终端打开
+需要调整提醒时间或通知方式吗？我可以为您修改配置。

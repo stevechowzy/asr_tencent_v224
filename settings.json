@@ -1,0 +1,17 @@
+{
+  "editor.fontSize": 14,
+  
+  "advancedSettings": {
+    "experimental.chatHistory": {
+      "storagePath": "~/asr_tencent_v224/chat_logs",
+      "autoExport": true,
+      "integrateWithProject": {
+        "asr_tencent_v224": {
+          "monitorFiles": ["main.py", "tencent_api.py"],
+          "autoCommit": true
+        }
+      }
+    },
+    "pythonInterpreter": "/usr/local/bin/python3.9"
+  }
+} 

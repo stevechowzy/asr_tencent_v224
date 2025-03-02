@@ -13,4 +13,9 @@ def generate_daily_report():
 
 # 在resume_dev.sh末尾追加
 echo "生成今日报告..."
-python3 report_generator.py >> $LOG_PATH 
+python3 report_generator.py >> $LOG_PATH 2>&1
+
+# 在resume_dev.sh末尾追加
+echo "生成今日报告..."
+python3 report_generator.py >> $LOG_PATH 2>&1
+

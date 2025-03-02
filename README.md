@@ -35,13 +35,32 @@ cp .env.sample .env
 
 ### 使用说明
 
+#### 环境配置
 ```bash
-# 识别单个音频文件
-python src/asr_app.py "path/to/audio.wav"
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 
-# 示例输出
-音频文件大小: 256 KB
-识别结果: 你好，欢迎使用语音识别系统...
+# 安装音频依赖
+brew install portaudio  # macOS
+sudo apt-get install portaudio19-dev  # Linux
+```
+
+#### 配置文件
+创建 `.env` 文件：
+```ini
+TENCENT_SECRET_ID=your_secret_id
+TENCENT_SECRET_KEY=your_secret_key
+```
+
+#### 运行方式
+```bash
+# 文件模式
+python asr_app.py audio.wav
+
+# 实时模式
+python asr_app.py
+选择模式2
 ```
 
 ## 开发指南

@@ -1,28 +1,29 @@
-cat > .gitignore << EOF 
 # Virtual Environment
-**/.venv/
-**/.env*
-cat > .gitignore << EOF
-# Virtual Environment
-**/.venv/
-**/.env*
+.venv/
+.env*
 
 # Python
-**/__pycache__/
-**/*.py[cod]
+__pycache__/
+*.py[cod]
+*.so
+.Python
 
 # System
-**/.DS_Store
-**/Thumbs.db
+.DS_Store
+Thumbs.db
 
 # IDE
-**/.vscode/
-**/.idea/
+.vscode/
+.idea/
 
-# 环境变量文件
-.env
+# 日志文件
+*.log
+logs/
 
-# 忽略敏感信息
-chat_logs/*.log
+# 本地开发文件
+test_input.wav
+temp/
+
+# 敏感文件
 credentials.json
-.env
+chat_logs/

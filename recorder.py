@@ -1,11 +1,6 @@
 import pyaudio
-import wave
-import audioop
-import time
-from threading import Thread, Event
-from pydub.utils import get_array_type
 from array import array
-import math  # 添加math模块导入
+from threading import Event
 
 
 class AudioRecorder:
@@ -18,9 +13,8 @@ class AudioRecorder:
         channels=1,
         format_type=pyaudio.paInt16
     ):
-        """
-        初始化录音器
-        
+        """初始化录音器
+
         Args:
             rate (int): 采样率，默认16000Hz
             chunk (int): 缓冲区大小，默认1024
@@ -35,8 +29,8 @@ class AudioRecorder:
         self.stream = None
         self.frames = []
         self.is_recording = Event()
-        self.silence_threshold = 500  # 静音阈值
-        self.silence_timeout = 2  # 秒
+        self.silence_threshold = 500
+        self.silence_timeout = 2
 
     def start(self):
         """开始录音"""
@@ -51,9 +45,8 @@ class AudioRecorder:
         print("录音已开始...")
 
     def read_chunk(self):
-        """
-        读取一个音频块
-        
+        """读取一个音频块
+
         Returns:
             bytes: 音频数据
         """
@@ -71,9 +64,8 @@ class AudioRecorder:
         print("录音已停止")
 
     def calculate_rms(self, data):
-        """
-        计算音频数据的均方根值（音量）
-        
+        """计算音频数据的均方根值（音量）
+
         Args:
             data (bytes): 音频数据
 
@@ -83,9 +75,8 @@ class AudioRecorder:
         if not data:
             return 0
 
-        # 将字节数据转换为短整型数组
         count = len(data) // 2
-        shorts = array.array('h', data)
+        shorts = array('h', data)
         sum_squares = sum(s * s for s in shorts)
         rms = (sum_squares / count) ** 0.5
 

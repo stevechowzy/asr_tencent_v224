@@ -29,4 +29,12 @@ jobs:
     - name: Run basic tests
       run: |
         python -c "import pyaudio; print('PyAudio version:', pyaudio.__version__)"
-        python -c "from tencentcloud.common import credential; print('SDK import success')" 
+        python -c "from tencentcloud.common import credential; print('SDK import success')"
+    # 暂时注释掉需要密钥的测试
+    # - name: Run unit tests
+    #   env:
+    #     TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+    #     TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+    #   run: |
+    #     pip install pytest
+    #     pytest tests/ -v 

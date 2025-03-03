@@ -1,19 +1,13 @@
-import os
 from pydub import AudioSegment
+import os
 
 
 class AudioPreprocessor:
     """音频预处理器类"""
 
-    def __init__(
-        self,
-        sample_rate=16000,
-        channels=1,
-        target_format="wav"
-    ):
-        """
-        初始化音频预处理器
-        
+    def __init__(self, sample_rate=16000, channels=1, target_format="wav"):
+        """初始化音频预处理器
+
         Args:
             sample_rate (int): 目标采样率
             channels (int): 目标通道数
@@ -24,13 +18,12 @@ class AudioPreprocessor:
         self.target_format = target_format
 
     def process(self, input_path, output_dir=None):
-        """
-        处理音频文件
-        
+        """处理音频文件
+
         Args:
             input_path (str): 输入音频文件路径
             output_dir (str): 输出目录
-            
+
         Returns:
             str: 处理后的文件路径
         """
@@ -42,28 +35,28 @@ class AudioPreprocessor:
 
             # 读取音频文件
             audio = AudioSegment.from_file(input_path)
-            
+
             # 标准化音频参数
             audio = self._normalize_audio(audio)
-            
+
             # 生成输出路径
             output_path = self._generate_output_path(input_path, output_dir)
-            
+
             # 导出处理后的音频
             audio.export(output_path, format=self.target_format)
+
             return output_path
-            
+
         except Exception as e:
             print(f"音频处理失败: {str(e)}")
             return None
 
     def _normalize_audio(self, audio):
-        """
-        标准化音频参数
-        
+        """标准化音频参数
+
         Args:
             audio (AudioSegment): 音频段
-            
+
         Returns:
             AudioSegment: 处理后的音频
         """
@@ -75,13 +68,12 @@ class AudioPreprocessor:
         )
 
     def _generate_output_path(self, input_path, output_dir):
-        """
-        生成输出文件路径
-        
+        """生成输出文件路径
+
         Args:
             input_path (str): 输入文件路径
             output_dir (str): 输出目录
-            
+
         Returns:
             str: 输出文件路径
         """

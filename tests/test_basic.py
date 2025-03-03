@@ -3,9 +3,12 @@ import unittest
 class TestBasicSetup(unittest.TestCase):
     def test_imports(self):
         """测试基本导入"""
-        import pyaudio
-        from tencentcloud.common import credential
-        self.assertTrue(True, "基本导入成功")
+        try:
+            import pyaudio
+            from tencentcloud.common import credential
+            self.assertTrue(True, "基本导入成功")
+        except ImportError as e:
+            self.fail(f"导入失败: {str(e)}")
 
     def test_audio_setup(self):
         """测试音频设置"""

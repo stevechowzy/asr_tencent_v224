@@ -1,5 +1,6 @@
-pytest==8.3.4
+pyaudio==0.2.13
+tencentcloud-sdk-python==3.0.1035
+pytest==7.4.3
+black==23.11.0
+flake8==6.1.0
 python-dotenv==1.0.0
-requests==2.32.3
-tencentcloud-sdk-python-asr==3.0.1324
-tencentcloud-sdk-python-common==3.0.1324

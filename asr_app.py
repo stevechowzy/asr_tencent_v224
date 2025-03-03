@@ -91,7 +91,10 @@ def tencent_asr(audio_data, secret_id, secret_key):
 
 def split_audio(audio, chunk_length=59000):  # 59秒分块
     """分割音频为小块"""
-    return [audio[i:i + chunk_length] for i in range(0, len(audio), chunk_length)]
+    return [
+        audio[i:i + chunk_length]
+        for i in range(0, len(audio), chunk_length)
+    ]
 
 
 def main():
@@ -171,8 +174,11 @@ def real_time_asr():
                 # 创建新线程处理识别请求
                 Thread(
                     target=send_asr_request,
-                    args=(base64_data, os.getenv("TENCENT_SECRET_ID"), 
-                          os.getenv("TENCENT_SECRET_KEY"))
+                    args=(
+                        base64_data,
+                        os.getenv("TENCENT_SECRET_ID"),
+                        os.getenv("TENCENT_SECRET_KEY")
+                    )
                 ).start()
                 
                 # 清空缓冲区

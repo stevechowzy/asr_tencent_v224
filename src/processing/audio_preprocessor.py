@@ -23,7 +23,7 @@ class AudioPreprocessor:
         self.channels = channels
         self.target_format = target_format
 
-    def process(self, input_path, output_dir="processed"):
+    def process(self, input_path, output_dir=None):
         """
         处理音频文件
         
@@ -35,20 +35,19 @@ class AudioPreprocessor:
             str: 处理后的文件路径
         """
         try:
-            # 创建输出目录
-            os.makedirs(output_dir, exist_ok=True)
-            
-            # 加载音频
+            # 检查输入文件是否存在
+            if not os.path.exists(input_path):
+                print(f"输入文件不存在: {input_path}")
+                return None
+
+            # 读取音频文件
             audio = AudioSegment.from_file(input_path)
             
             # 标准化音频参数
             audio = self._normalize_audio(audio)
             
             # 生成输出路径
-            output_path = self._generate_output_path(
-                input_path,
-                output_dir
-            )
+            output_path = self._generate_output_path(input_path, output_dir)
             
             # 导出处理后的音频
             audio.export(output_path, format=self.target_format)
@@ -69,7 +68,8 @@ class AudioPreprocessor:
             AudioSegment: 处理后的音频
         """
         return (
-            audio.set_frame_rate(self.sample_rate)
+            audio
+            .set_frame_rate(self.sample_rate)
             .set_channels(self.channels)
             .set_sample_width(2)
         )
@@ -85,8 +85,11 @@ class AudioPreprocessor:
         Returns:
             str: 输出文件路径
         """
-        base_name = os.path.splitext(os.path.basename(input_path))[0]
+        if output_dir is None:
+            output_dir = os.path.dirname(input_path)
+
+        filename = os.path.splitext(os.path.basename(input_path))[0]
         return os.path.join(
             output_dir,
-            f"{base_name}_processed.{self.target_format}"
+            f"{filename}_processed.{self.target_format}"
         )

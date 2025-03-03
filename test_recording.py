@@ -9,11 +9,13 @@ WAVE_OUTPUT_FILENAME = "test.wav"
 
 p = pyaudio.PyAudio()
 
-stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=1024)
+stream = p.open(
+    format=FORMAT,
+    channels=CHANNELS,
+    rate=RATE,
+    input=True,
+    frames_per_buffer=1024
+)
 
 print("开始录音...")
 frames = []
@@ -28,9 +30,9 @@ stream.stop_stream()
 stream.close()
 p.terminate()
 
-wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+wf = wave.open(WAVE_OUTPUT_FILENAME, "wb")
 wf.setnchannels(CHANNELS)
 wf.setsampwidth(p.get_sample_size(FORMAT))
 wf.setframerate(RATE)
-wf.writeframes(b''.join(frames))
-wf.close() 
+wf.writeframes(b"".join(frames))
+wf.close()

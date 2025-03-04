@@ -1,5 +1,6 @@
 import pytest
 import os
+import shutil
 from src.processing.audio_preprocessor import AudioPreprocessor
 
 
@@ -9,13 +10,26 @@ def preprocessor():
     return AudioPreprocessor()
 
 
-def test_audio_conversion(preprocessor):
+@pytest.fixture
+def test_data_dir():
+    """创建测试数据目录"""
+    test_dir = os.path.join(os.path.dirname(__file__), '..', 'test_data')
+    os.makedirs(test_dir, exist_ok=True)
+    return test_dir
+
+
+def test_audio_conversion(preprocessor, test_data_dir):
     """测试音频转换功能"""
-    input_path = "test_data/original.mp3"
-    output_dir = "test_data/processed"
+    # 使用项目中的测试音频文件
+    original_test_file = os.path.join(os.path.dirname(__file__), '..', 'test.wav')
+    input_path = os.path.join(test_data_dir, "original.wav")
+    output_dir = os.path.join(test_data_dir, "processed")
 
     # 确保测试目录存在
     os.makedirs(output_dir, exist_ok=True)
+
+    # 复制测试音频文件到测试目录
+    shutil.copy2(original_test_file, input_path)
 
     # 处理音频文件
     output_path = preprocessor.process(input_path, output_dir)
@@ -25,6 +39,10 @@ def test_audio_conversion(preprocessor):
     assert os.path.exists(output_path)
     assert output_path.endswith(".wav")
 
+    # 清理测试文件
+    os.remove(input_path)
+    shutil.rmtree(output_dir)
+
 
 def test_invalid_file(preprocessor):
     """测试无效文件处理"""
@@ -32,7 +50,10 @@ def test_invalid_file(preprocessor):
     assert output_path is None
 
 
-def test_unsupported_format(preprocessor):
+def test_unsupported_format(preprocessor, test_data_dir):
     """测试不支持的音频格式"""
-    output_path = preprocessor.process("test_data/corrupted.ogg")
+    input_path = os.path.join(test_data_dir, "corrupted.ogg")
+    with open(input_path, 'wb') as f:
+        f.write(b'dummy audio data')
+    output_path = preprocessor.process(input_path)
     assert output_path is None

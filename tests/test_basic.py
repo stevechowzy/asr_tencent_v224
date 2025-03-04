@@ -1,4 +1,5 @@
 import unittest
+import os
 
 
 class TestBasicSetup(unittest.TestCase):
@@ -13,6 +14,7 @@ class TestBasicSetup(unittest.TestCase):
         except ImportError as e:
             self.fail(f"导入失败: {str(e)}")
 
+    @unittest.skipIf(os.getenv('CI') == 'true', "在 CI 环境中跳过音频设备测试")
     def test_audio_setup(self):
         """测试音频设置"""
         import pyaudio

@@ -3,6 +3,7 @@ import unittest
 
 class TestBasicSetup(unittest.TestCase):
     """基本设置测试类"""
+
     def test_imports(self):
         """测试必要的导入"""
         try:
@@ -21,5 +22,5 @@ class TestBasicSetup(unittest.TestCase):
         p.terminate()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

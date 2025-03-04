@@ -61,8 +61,7 @@ class AudioPreprocessor:
             AudioSegment: 处理后的音频
         """
         return (
-            audio
-            .set_frame_rate(self.sample_rate)
+            audio.set_frame_rate(self.sample_rate)
             .set_channels(self.channels)
             .set_sample_width(2)
         )
@@ -81,7 +80,4 @@ class AudioPreprocessor:
             output_dir = os.path.dirname(input_path)
 
         filename = os.path.splitext(os.path.basename(input_path))[0]
-        return os.path.join(
-            output_dir,
-            f"{filename}_processed.{self.target_format}"
-        )
+        return os.path.join(output_dir, f"{filename}_processed.{self.target_format}")

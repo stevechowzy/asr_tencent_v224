@@ -5,13 +5,8 @@ from pydub.utils import get_array_type
 
 class AudioRecorder:
     """音频录制类"""
-    def __init__(
-        self,
-        rate=16000,
-        chunk=1024,
-        channels=1,
-        format=pyaudio.paInt16
-    ):
+
+    def __init__(self, rate=16000, chunk=1024, channels=1, format=pyaudio.paInt16):
         """初始化音频录制器
 
         Args:
@@ -37,7 +32,7 @@ class AudioRecorder:
             channels=self.channels,
             rate=self.rate,
             input=True,
-            frames_per_buffer=self.chunk
+            frames_per_buffer=self.chunk,
         )
         self.frames = []
         self.is_recording = True
@@ -59,7 +54,7 @@ class AudioRecorder:
             self.stream.stop_stream()
             self.stream.close()
             self.stream = None
-        return b''.join(self.frames)
+        return b"".join(self.frames)
 
     def calculate_rms(self, data):
         """计算音频数据的RMS值
@@ -72,7 +67,7 @@ class AudioRecorder:
         """
         array_type = get_array_type(16)
         count = len(data) // 2
-        shorts = array_type('h')
+        shorts = array_type("h")
         shorts.frombytes(data)
         sum_squares = sum(s * s for s in shorts)
         rms = (sum_squares / count) ** 0.5

@@ -9,28 +9,26 @@ from tencentcloud.common.profile.client_profile import ClientProfile
 from tencentcloud.common.profile.http_profile import HttpProfile
 from tencentcloud.asr.v20190614 import asr_client, models
 from tencentcloud.common.exception.tencent_cloud_sdk_exception import (
-    TencentCloudSDKException
+    TencentCloudSDKException,
 )
 
 
 def monitor_performance(func):
     """性能监控装饰器"""
+
     def wrapper(*args, **kwargs):
         import time
+
         start_time = time.time()
         result = func(*args, **kwargs)
         end_time = time.time()
         print(f"{func.__name__} 执行时间: {end_time - start_time:.2f} 秒")
         return result
+
     return wrapper
 
 
-def convert_audio(
-    input_path,
-    output_format="wav",
-    frame_rate=16000,
-    channels=1
-):
+def convert_audio(input_path, output_format="wav", frame_rate=16000, channels=1):
     """转换音频格式和参数"""
     try:
         # 读取音频文件
@@ -91,10 +89,7 @@ def tencent_asr(audio_data, secret_id, secret_key):
 
 def split_audio(audio, chunk_length=59000):  # 59秒分块
     """分割音频为小块"""
-    return [
-        audio[i:i + chunk_length]
-        for i in range(0, len(audio), chunk_length)
-    ]
+    return [audio[i : i + chunk_length] for i in range(0, len(audio), chunk_length)]
 
 
 def main():
@@ -116,7 +111,7 @@ def main():
     result = tencent_asr(
         base64.b64encode(audio_data).decode(),
         os.getenv("TENCENT_SECRET_ID"),
-        os.getenv("TENCENT_SECRET_KEY")
+        os.getenv("TENCENT_SECRET_KEY"),
     )
 
     if result:
@@ -136,7 +131,7 @@ def real_time_asr():
         channels=1,
         rate=16000,
         input=True,
-        frames_per_buffer=1024
+        frames_per_buffer=1024,
     )
 
     print("开始录音...")
@@ -151,10 +146,10 @@ def real_time_asr():
             # 每3秒处理一次
             if len(frames) >= 48:  # 16000Hz采样率，每秒16帧
                 # 合并音频数据
-                combined = b''.join(frames)
+                combined = b"".join(frames)
 
                 # 创建WAV文件
-                with wave.open("temp.wav", 'wb') as wf:
+                with wave.open("temp.wav", "wb") as wf:
                     wf.setnchannels(1)
                     wf.setsampwidth(2)
                     wf.setframerate(16000)
@@ -177,8 +172,8 @@ def real_time_asr():
                     args=(
                         base64_data,
                         os.getenv("TENCENT_SECRET_ID"),
-                        os.getenv("TENCENT_SECRET_KEY")
-                    )
+                        os.getenv("TENCENT_SECRET_KEY"),
+                    ),
                 ).start()
 
                 # 清空缓冲区
@@ -205,6 +200,7 @@ def input_non_blocking():
     """非阻塞输入检测"""
     import sys
     import select
+
     return sys.stdin in select.select([sys.stdin], [], [], 0)[0]
 
 

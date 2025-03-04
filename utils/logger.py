@@ -18,9 +18,7 @@ def setup_logger():
 
     # 配置文件处理器
     file_handler = RotatingFileHandler(
-        "logs/asr.log",
-        maxBytes=1024 * 1024,
-        backupCount=5
+        "logs/asr.log", maxBytes=1024 * 1024, backupCount=5
     )
     file_handler.setLevel(logging.DEBUG)
 
